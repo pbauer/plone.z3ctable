@@ -84,9 +84,10 @@ class BatchProvider(batch.BatchProvider):
             index = self.batch.index - 1
             numberitems = len(self.batches[index])
             label = '&laquo; '
-            label += translate(_(u'batch_previous_x_items',
+            messageid = _(u'batch_previous_x_items',
                 default=u'Previous ${number} items',
-                mapping=dict(number=unicode(numberitems))))
+                mapping=dict(number=unicode(numberitems)))
+            label += translate(messageid, context=self.request)
             url = self.makeUrl(index)
             link = self.makeLink(url, label)
             result.append(link)
@@ -99,9 +100,10 @@ class BatchProvider(batch.BatchProvider):
             result.append('<span class="next">')
             index = self.batch.index + 1
             numberitems = len(self.batches[index])
-            label = translate(_(u'batch_next_x_items',
+            messageid = _(u'batch_next_x_items',
                 default=u'Next ${number} items',
-                mapping=dict(number=unicode(numberitems))))
+                mapping=dict(number=unicode(numberitems)))
+            label = translate(messageid, context=self.request)
             label += ' &raquo;'
             url = self.makeUrl(index)
             link = self.makeLink(url, label)
