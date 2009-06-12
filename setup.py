@@ -25,8 +25,6 @@ setup(name='plone.z3ctable',
       install_requires=[
           'setuptools',
           'z3c.table',
-          'ulif.plone.testsetup',
-          'Plone',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
