@@ -83,7 +83,8 @@ class BatchProvider(batch.BatchProvider):
             result.append('<span class="previous">')
             index = self.batch.index - 1
             numberitems = len(self.batches[index])
-            label = translate(_(u'batch_previous_x_items',
+            label = '&laquo; '
+            label += translate(_(u'batch_previous_x_items',
                 default=u'Previous ${number} items',
                 mapping=dict(number=unicode(numberitems))))
             url = self.makeUrl(index)
@@ -101,6 +102,7 @@ class BatchProvider(batch.BatchProvider):
             label = translate(_(u'batch_next_x_items',
                 default=u'Next ${number} items',
                 mapping=dict(number=unicode(numberitems))))
+            label += ' &raquo;'
             url = self.makeUrl(index)
             link = self.makeLink(url, label)
             result.append(link)

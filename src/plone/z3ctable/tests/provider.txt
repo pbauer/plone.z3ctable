@@ -97,7 +97,7 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="next">
-    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5">Next 5 items</a>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5">Next 5 items &raquo;</a>
     </span>
     [1]
     <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5">2</a>
@@ -114,10 +114,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=0">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=0">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=10">Next 5 items</a>
+    <a href="http://...table-batchStart:int=10">Next 5 items &raquo;</a>
     </span>
     <a href="http://...table-batchStart:int=0">1</a>
     [2]
@@ -135,10 +135,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=5">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=5">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=15">Next 5 items</a>
+    <a href="http://...table-batchStart:int=15">Next 5 items &raquo;</a>
     </span>
     <a href="http://...table-batchStart:int=0">1</a>
     <a href="http://...table-batchStart:int=5">2</a>
@@ -157,10 +157,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=10">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=10">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=20">Next 5 items</a>
+    <a href="http://...table-batchStart:int=20">Next 5 items &raquo;</a>
     </span>
     <a href="http://...table-batchStart:int=0">1</a>
     <a href="http://...table-batchStart:int=5">2</a>
@@ -180,10 +180,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=15">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=15">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=25">Next 5 items</a>
+    <a href="http://...table-batchStart:int=25">Next 5 items &raquo;</a>
     </span>
     <span>
     <a href="http://...table-batchStart:int=0">1</a>
@@ -206,10 +206,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=20">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=20">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=30">Next 5 items</a>
+    <a href="http://...table-batchStart:int=30">Next 5 items &raquo;</a>
     </span>
     <span>
     <a href="http://...table-batchStart:int=0">1</a>
@@ -233,10 +233,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=25">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=25">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=35">Next 5 items</a>
+    <a href="http://...table-batchStart:int=35">Next 5 items &raquo;</a>
     </span>
     <span>
     <a href="http://...table-batchStart:int=0">1</a>
@@ -260,10 +260,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=30">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=30">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=40">Next 5 items</a>
+    <a href="http://...table-batchStart:int=40">Next 5 items &raquo;</a>
     </span>
     <span>
     <a href="http://...table-batchStart:int=0">1</a>
@@ -286,10 +286,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=35">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=35">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=45">Next 5 items</a>
+    <a href="http://...table-batchStart:int=45">Next 5 items &raquo;</a>
     </span>
     <span>
     <a href="http://...table-batchStart:int=0">1</a>
@@ -309,10 +309,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=40">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=40">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=50">Next 5 items</a>
+    <a href="http://...table-batchStart:int=50">Next 5 items &raquo;</a>
     </span>
     <span>
     <a href="http://...table-batchStart:int=0">1</a>
@@ -331,10 +331,10 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=45">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=45">&laquo; Previous 5 items</a>
     </span>
     <span class="next">
-    <a href="http://...table-batchStart:int=55">Next 4 items</a>
+    <a href="http://...table-batchStart:int=55">Next 4 items &raquo;</a>
     </span>
     <span>
     <a href="http://...table-batchStart:int=0">1</a>
@@ -352,7 +352,7 @@ Render first items.
     >>> print table.renderBatch()
     <div class="listingBar">
     <span class="previous">
-    <a href="http://...table-batchStart:int=50">Previous 5 items</a>
+    <a href="http://...table-batchStart:int=50">&laquo; Previous 5 items</a>
     </span>
     <span>
     <a href="http://...table-batchStart:int=0">1</a>
