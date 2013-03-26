@@ -4,7 +4,8 @@ Changelog
 0.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Fix import for Plone 4.3
+  [jfroche]
 
 
 0.1 (2009-06-24)
