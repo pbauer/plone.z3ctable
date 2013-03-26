@@ -1,7 +1,7 @@
 Introduction
 ============
 
-`plone.z3cbatch` implements a BatchProvider compatible with `z3c.table`.
+`plone.z3ctable` implements a BatchProvider compatible with `z3c.table`.
 
 This batch provider renders as `CMFPlone batch_macros`.
 
