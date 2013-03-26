@@ -5,6 +5,8 @@ from zope.i18n import translate
 
 try:
     from plone.batching.utils import calculate_pagerange, calculate_pagenumber
+    calculate_pagerange
+    calculate_pagenumber
 except ImportError:
     from Products.CMFPlone.PloneBatch import calculate_pagenumber
     from Products.CMFPlone.PloneBatch import calculate_pagerange
@@ -22,11 +24,11 @@ class PloneBatch(object):
 
         # Set up the total number of pages
         self.numpages = calculate_pagenumber(len(self.batch.sequence),
-            self.batch.size)
+                                             self.batch.size)
 
         # Set up the current page number
-        self.pagenumber = calculate_pagenumber(self.batch.start+1,
-            self.batch.size)
+        self.pagenumber = calculate_pagenumber(self.batch.start + 1,
+                                               self.batch.size)
 
         # Set up pagerange for the navigation quick links
         self.pagerange, self.pagerangestart, self.pagerangeend = (
@@ -52,7 +54,7 @@ class PloneBatch(object):
 
     @property
     def dotsbeforelast(self):
-        return not self.batch.total-1 in self.navlist
+        return not self.batch.total - 1 in self.navlist
 
     @property
     def showlast(self):
@@ -90,8 +92,8 @@ class BatchProvider(batch.BatchProvider):
             numberitems = len(self.batches[index])
             label = '&laquo; '
             messageid = _(u'batch_previous_x_items',
-                default=u'Previous ${number} items',
-                mapping=dict(number=unicode(numberitems)))
+                          default=u'Previous ${number} items',
+                          mapping=dict(number=unicode(numberitems)))
             label += translate(messageid, context=self.request)
             url = self.makeUrl(index)
             link = self.makeLink(url, label)
@@ -106,8 +108,8 @@ class BatchProvider(batch.BatchProvider):
             index = self.batch.index + 1
             numberitems = len(self.batches[index])
             messageid = _(u'batch_next_x_items',
-                default=u'Next ${number} items',
-                mapping=dict(number=unicode(numberitems)))
+                          default=u'Next ${number} items',
+                          mapping=dict(number=unicode(numberitems)))
             label = translate(messageid, context=self.request)
             label += ' &raquo;'
             url = self.makeUrl(index)
@@ -121,8 +123,8 @@ class BatchProvider(batch.BatchProvider):
 
     def makeUrl(self, index):
         batch = self.batches[index]
-        query = {self.table.prefix +'-batchStart': batch.start,
-            self.table.prefix +'-batchSize': batch.size}
+        query = {self.table.prefix + '-batchStart': batch.start,
+                 self.table.prefix + '-batchSize': batch.size}
         querystring = make_query(query)
         base = url_query(self.request, omit=query.keys())
         return '%s&%s' % (base, querystring)
@@ -142,7 +144,7 @@ class BatchProvider(batch.BatchProvider):
     def previousLinks(self):
         result = []
         for number in self.plonebatch.prevlist:
-            url = self.makeUrl(number-1)
+            url = self.makeUrl(number - 1)
             label = str(number)
             result.append(self.makeLink(url, label))
         return result
@@ -153,7 +155,7 @@ class BatchProvider(batch.BatchProvider):
     def nextLinks(self):
         result = []
         for number in self.plonebatch.nextlist:
-            url = self.makeUrl(number-1)
+            url = self.makeUrl(number - 1)
             label = str(number)
             result.append(self.makeLink(url, label))
         return result
@@ -164,7 +166,7 @@ class BatchProvider(batch.BatchProvider):
             result.append(u'<span>')
             if self.plonebatch.dotsbeforelast:
                 result.append(u'...')
-            url = self.makeUrl(self.batch.total-1)
+            url = self.makeUrl(self.batch.total - 1)
             label = str(self.batch.total)
             result.append(self.makeLink(url, label))
             result.append(u'</span>')
