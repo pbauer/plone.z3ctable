@@ -3,9 +3,14 @@ from ZTUtils import make_query
 from ZTUtils import url_query
 from zope.i18n import translate
 
-from Products.CMFPlone.PloneBatch import calculate_pagenumber
-from Products.CMFPlone.PloneBatch import calculate_pagerange
+try:
+    from plone.batching.utils import calculate_pagerange, calculate_pagenumber
+except ImportError:
+    from Products.CMFPlone.PloneBatch import calculate_pagenumber
+    from Products.CMFPlone.PloneBatch import calculate_pagerange
+
 from Products.CMFPlone import PloneMessageFactory as _
+
 
 LINK = '<a href="%(url)s">%(label)s</a>'
 
