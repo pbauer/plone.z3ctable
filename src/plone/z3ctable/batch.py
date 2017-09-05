@@ -14,7 +14,7 @@ except ImportError:
 from Products.CMFPlone import PloneMessageFactory as _
 
 
-LINK = '<a href="%(url)s">%(label)s</a>'
+LINK = '<a href="{url:s}" title="{label:s}">{label:s}</a>'
 
 
 class PloneBatch(object):
@@ -69,57 +69,61 @@ class BatchProvider(batch.BatchProvider):
     def render(self):
         results = []
 
-        header = u'<div class="listingBar">'
+        header = '<nav class="pagination">'
         results.append(header)
 
         results.extend(self.previousItemsLink())
-        results.extend(self.nextItemsLink())
         results.extend(self.firstLink())
         results.extend(self.previousLinks())
         results.extend(self.current())
         results.extend(self.nextLinks())
         results.extend(self.lastLink())
+        results.extend(self.nextItemsLink())
 
-        footer = u'</div>'
+        footer = '</nav>'
         results.append(footer)
-        return u'\n'.join(results)
+        return '\n'.join(results)
 
     def previousItemsLink(self):
         result = []
         if self.batch.previous:
-            result.append('<span class="previous">')
+            result.append('<li class="previous">')
+            result.append('<span>')
             index = self.batch.index - 1
             numberitems = len(self.batches[index])
             label = '&laquo; '
-            messageid = _(u'batch_previous_x_items',
-                          default=u'Previous ${number} items',
-                          mapping=dict(number=unicode(numberitems)))
+            messageid = _('batch_previous_x_items',
+                          default='Previous ${number} items',
+                          mapping=dict(number=str(numberitems)))
             label += translate(messageid, context=self.request)
             url = self.makeUrl(index)
             link = self.makeLink(url, label)
             result.append(link)
             result.append('</span>')
+            result.append('</li>')
         return result
 
     def nextItemsLink(self):
         result = []
         if self.batch.next:
-            result.append('<span class="next">')
+            result.append('<li class="next">')
+            result.append('<span>')
             index = self.batch.index + 1
             numberitems = len(self.batches[index])
-            messageid = _(u'batch_next_x_items',
-                          default=u'Next ${number} items',
-                          mapping=dict(number=unicode(numberitems)))
+            messageid = _('batch_next_x_items',
+                          default='Next ${number} items',
+                          mapping=dict(number=str(numberitems)))
             label = translate(messageid, context=self.request)
             label += ' &raquo;'
             url = self.makeUrl(index)
             link = self.makeLink(url, label)
             result.append(link)
             result.append('</span>')
+            result.append('</li>')
         return result
 
     def makeLink(self, url, label):
-        return LINK % dict(url=url, label=label)
+        return LINK.format(url=url, label=label)
 
     def makeUrl(self, index):
         batch = self.batches[index]
@@ -127,18 +131,24 @@ class BatchProvider(batch.BatchProvider):
                  self.table.prefix + '-batchSize': batch.size}
         querystring = make_query(query)
         base = url_query(self.request, omit=query.keys())
-        return '%s&%s' % (base, querystring)
+        return '{0:s}&{1:s}'.format(base, querystring)
 
     def firstLink(self):
         result = []
         if self.plonebatch.showfirst:
-            result.append(u'<span>')
+            result.append('<li>')
+            result.append('<span>')
             url = self.makeUrl(0)
             label = '1'
             result.append(self.makeLink(url, label))
+            result.append('</span>')
+            result.append('</li>')
             if self.plonebatch.dotsafterfirst:
-                result.append(u'...')
-            result.append(u'</span>')
+                result.append('<li>')
+                result.append('<span>')
+                result.append('&hellip;')
+                result.append('</span>')
+                result.append('</li>')
         return result
 
     def previousLinks(self):
@@ -146,28 +156,44 @@ class BatchProvider(batch.BatchProvider):
         for number in self.plonebatch.prevlist:
             url = self.makeUrl(number - 1)
             label = str(number)
+            result.append('<li>')
             result.append(self.makeLink(url, label))
+            result.append('</li>')
         return result
 
     def current(self):
-        return ['[%s]' % self.batch.number]
+        return [
+            '<li class="active">',
+            '<span>',
+            str(self.batch.number),
+            '</span>',
+            '</li>'
+        ]
 
     def nextLinks(self):
         result = []
         for number in self.plonebatch.nextlist:
             url = self.makeUrl(number - 1)
             label = str(number)
+            result.append('<li>')
             result.append(self.makeLink(url, label))
+            result.append('</li>')
         return result
 
     def lastLink(self):
         result = []
         if self.plonebatch.showlast:
-            result.append(u'<span>')
             if self.plonebatch.dotsbeforelast:
-                result.append(u'...')
+                result.append('<li>')
+                result.append('<span>')
+                result.append('&hellip;')
+                result.append('</span>')
+                result.append('</li>')
+            result.append('<li>')
+            result.append('<span>')
             url = self.makeUrl(self.batch.total - 1)
             label = str(self.batch.total)
             result.append(self.makeLink(url, label))
-            result.append(u'</span>')
+            result.append('</span>')
+            result.append('</li>')
         return result
