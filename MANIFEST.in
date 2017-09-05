@@ -1,2 +1,5 @@
-recursive-include docs *
-recursive-include src *
+graft src/plone
+graft docs
+include *.rst
+global-exclude *.pyc
+exclude .* *.cfg result Makefile* bootstrap.py
