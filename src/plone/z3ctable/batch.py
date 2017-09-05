@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+from Products.CMFPlone import PloneMessageFactory as _
 from z3c.table import batch
+from zope.i18n import translate
 from ZTUtils import make_query
 from ZTUtils import url_query
-from zope.i18n import translate
+
 
 try:
     from plone.batching.utils import calculate_pagerange, calculate_pagenumber
@@ -10,8 +13,6 @@ try:
 except ImportError:
     from Products.CMFPlone.PloneBatch import calculate_pagenumber
     from Products.CMFPlone.PloneBatch import calculate_pagerange
-
-from Products.CMFPlone import PloneMessageFactory as _
 
 
 LINK = '<a href="{url:s}" title="{label:s}">{label:s}</a>'
@@ -46,19 +47,19 @@ class PloneBatch(object):
 
     @property
     def showfirst(self):
-        return not 1 in self.navlist
+        return 1 not in self.navlist
 
     @property
     def dotsafterfirst(self):
-        return not 2 in self.navlist
+        return 2 not in self.navlist
 
     @property
     def dotsbeforelast(self):
-        return not self.batch.total - 1 in self.navlist
+        return self.batch.total - 1 not in self.navlist
 
     @property
     def showlast(self):
-        return not self.batch.total in self.navlist
+        return self.batch.total not in self.navlist
 
 
 class BatchProvider(batch.BatchProvider):
@@ -68,10 +69,8 @@ class BatchProvider(batch.BatchProvider):
 
     def render(self):
         results = []
-
-        header = '<nav class="pagination">'
-        results.append(header)
-
+        results.append('<nav class="pagination">')
+        results.append('<ul>')
         results.extend(self.previousItemsLink())
         results.extend(self.firstLink())
         results.extend(self.previousLinks())
@@ -79,16 +78,14 @@ class BatchProvider(batch.BatchProvider):
         results.extend(self.nextLinks())
         results.extend(self.lastLink())
         results.extend(self.nextItemsLink())
-
-        footer = '</nav>'
-        results.append(footer)
+        results.append('</ul>')
+        results.append('</nav>')
         return '\n'.join(results)
 
     def previousItemsLink(self):
         result = []
         if self.batch.previous:
             result.append('<li class="previous">')
-            result.append('<span>')
             index = self.batch.index - 1
             numberitems = len(self.batches[index])
             label = '&laquo; '
@@ -99,7 +96,6 @@ class BatchProvider(batch.BatchProvider):
             url = self.makeUrl(index)
             link = self.makeLink(url, label)
             result.append(link)
-            result.append('</span>')
             result.append('</li>')
         return result
 
@@ -107,7 +103,6 @@ class BatchProvider(batch.BatchProvider):
         result = []
         if self.batch.next:
             result.append('<li class="next">')
-            result.append('<span>')
             index = self.batch.index + 1
             numberitems = len(self.batches[index])
             messageid = _('batch_next_x_items',
@@ -118,7 +113,6 @@ class BatchProvider(batch.BatchProvider):
             url = self.makeUrl(index)
             link = self.makeLink(url, label)
             result.append(link)
-            result.append('</span>')
             result.append('</li>')
         return result
 
@@ -137,11 +131,9 @@ class BatchProvider(batch.BatchProvider):
         result = []
         if self.plonebatch.showfirst:
             result.append('<li>')
-            result.append('<span>')
             url = self.makeUrl(0)
             label = '1'
             result.append(self.makeLink(url, label))
-            result.append('</span>')
             result.append('</li>')
             if self.plonebatch.dotsafterfirst:
                 result.append('<li>')
@@ -190,10 +182,8 @@ class BatchProvider(batch.BatchProvider):
                 result.append('</span>')
                 result.append('</li>')
             result.append('<li>')
-            result.append('<span>')
             url = self.makeUrl(self.batch.total - 1)
             label = str(self.batch.total)
             result.append(self.makeLink(url, label))
-            result.append('</span>')
             result.append('</li>')
         return result

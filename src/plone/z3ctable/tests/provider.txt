@@ -1,7 +1,7 @@
 Plone Batch Provider
 ====================
 
-First, we need to setup plone.z3ctable 
+First, we need to setup plone.z3ctable
 
     >>> from z3c.table import interfaces
     >>> from zope.configuration.xmlconfig import XMLConfig
@@ -39,7 +39,7 @@ Now, we can instantiate the table
     ...     pass
     >>> table = TestTable(sequence, request)
     >>> table.batchProviderName = 'plonebatch'
-    >>> table.batchSize=5 
+    >>> table.batchSize=5
     >>> table.render()
     u''
 
@@ -63,31 +63,31 @@ It is registered as an adapter.
 
 Render first items.
 
-    >>> table.startBatchingAt=5 
+    >>> table.startBatchingAt=5
     >>> table.batchStart = 0
     >>> table.update()
     >>> print table.render()
     <table>
       <thead>
         <tr>
-          <th>index</th>
+          <th class="sorted-on ascending">index</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>0</td>
+          <td class="sorted-on ascending">0</td>
         </tr>
         <tr>
-          <td>1</td>
+          <td class="sorted-on ascending">1</td>
         </tr>
         <tr>
-          <td>2</td>
+          <td class="sorted-on ascending">2</td>
         </tr>
         <tr>
-          <td>3</td>
+          <td class="sorted-on ascending">3</td>
         </tr>
         <tr>
-          <td>4</td>
+          <td class="sorted-on ascending">4</td>
         </tr>
       </tbody>
     </table>
@@ -95,294 +95,543 @@ Render first items.
     >>> table.__parent__ = sequence
     >>> table.__name__ = u'batchingTable.html'
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="next">
-    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5">Next 5 items &raquo;</a>
-    </span>
-    [1]
-    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5">2</a>
-    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=10">3</a>
-    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15">4</a>
+    <nav class="pagination">
+    <ul>
+    <li class="active">
     <span>
-    ...
-    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55">12</a>
+    1
     </span>
-    </div>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5" title="2">2</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=10" title="3">3</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15" title="4">4</a>
+    </li>
+    <li>
+    <span>
+    &hellip;
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
 
     >>> table.batchStart = 5
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=0">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=10">Next 5 items &raquo;</a>
-    </span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    [2]
-    <a href="http://...table-batchStart:int=10">3</a>
-    <a href="http://...table-batchStart:int=15">4</a>
-    <a href="http://...table-batchStart:int=20">5</a>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li class="active">
     <span>
-    ...
-    <a href="http://...table-batchStart:int=55">12</a>
+    2
     </span>
-    </div>    
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=10" title="3">3</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15" title="4">4</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=20" title="5">5</a>
+    </li>
+    <li>
+    <span>
+    &hellip;
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=10" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 10
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=5">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=15">Next 5 items &raquo;</a>
-    </span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    <a href="http://...table-batchStart:int=5">2</a>
-    [3]
-    <a href="http://...table-batchStart:int=15">4</a>
-    <a href="http://...table-batchStart:int=20">5</a>
-    <a href="http://...table-batchStart:int=25">6</a>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5" title="2">2</a>
+    </li>
+    <li class="active">
     <span>
-    ...
-    <a href="http://...table-batchStart:int=55">12</a>
+    3
     </span>
-    </div>
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15" title="4">4</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=20" title="5">5</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=25" title="6">6</a>
+    </li>
+    <li>
+    <span>
+    &hellip;
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 15
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=10">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=20">Next 5 items &raquo;</a>
-    </span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    <a href="http://...table-batchStart:int=5">2</a>
-    <a href="http://...table-batchStart:int=10">3</a>
-    [4]
-    <a href="http://...table-batchStart:int=20">5</a>
-    <a href="http://...table-batchStart:int=25">6</a>
-    <a href="http://...table-batchStart:int=30">7</a>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=10" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5" title="2">2</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=10" title="3">3</a>
+    </li>
+    <li class="active">
     <span>
-    ...
-    <a href="http://...table-batchStart:int=55">12</a>
+    4
     </span>
-    </div>
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=20" title="5">5</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=25" title="6">6</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=30" title="7">7</a>
+    </li>
+    <li>
+    <span>
+    &hellip;
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=20" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 20
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=15">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=25">Next 5 items &raquo;</a>
-    </span>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=5" title="2">2</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=10" title="3">3</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15" title="4">4</a>
+    </li>
+    <li class="active">
     <span>
-    <a href="http://...table-batchStart:int=0">1</a>
+    5
     </span>
-    <a href="http://...table-batchStart:int=5">2</a>
-    <a href="http://...table-batchStart:int=10">3</a>
-    <a href="http://...table-batchStart:int=15">4</a>
-    [5]
-    <a href="http://...table-batchStart:int=25">6</a>
-    <a href="http://...table-batchStart:int=30">7</a>
-    <a href="http://...table-batchStart:int=35">8</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=25" title="6">6</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=30" title="7">7</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=35" title="8">8</a>
+    </li>
+    <li>
     <span>
-    ...
-    <a href="http://...table-batchStart:int=55">12</a>
+    &hellip;
     </span>
-    </div>
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=25" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 25
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=20">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=30">Next 5 items &raquo;</a>
-    </span>
+        <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=20" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
     <span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    ...
+    &hellip;
     </span>
-    <a href="http://...table-batchStart:int=10">3</a>
-    <a href="http://...table-batchStart:int=15">4</a>
-    <a href="http://...table-batchStart:int=20">5</a>
-    [6]
-    <a href="http://...table-batchStart:int=30">7</a>
-    <a href="http://...table-batchStart:int=35">8</a>
-    <a href="http://...table-batchStart:int=40">9</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=10" title="3">3</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15" title="4">4</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=20" title="5">5</a>
+    </li>
+    <li class="active">
     <span>
-    ...
-    <a href="http://...table-batchStart:int=55">12</a>
+    6
     </span>
-    </div>
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=30" title="7">7</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=35" title="8">8</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=40" title="9">9</a>
+    </li>
+    <li>
+    <span>
+    &hellip;
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=30" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 30
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=25">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=35">Next 5 items &raquo;</a>
-    </span>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=25" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
     <span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    ...
+    &hellip;
     </span>
-    <a href="http://...table-batchStart:int=15">4</a>
-    <a href="http://...table-batchStart:int=20">5</a>
-    <a href="http://...table-batchStart:int=25">6</a>
-    [7]
-    <a href="http://...table-batchStart:int=35">8</a>
-    <a href="http://...table-batchStart:int=40">9</a>
-    <a href="http://...table-batchStart:int=45">10</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=15" title="4">4</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=20" title="5">5</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=25" title="6">6</a>
+    </li>
+    <li class="active">
     <span>
-    ...
-    <a href="http://...table-batchStart:int=55">12</a>
+    7
     </span>
-    </div>
- 
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=35" title="8">8</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=40" title="9">9</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=45" title="10">10</a>
+    </li>
+    <li>
+    <span>
+    &hellip;
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=35" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 35
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=30">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=40">Next 5 items &raquo;</a>
-    </span>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=30" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
     <span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    ...
+    &hellip;
     </span>
-    <a href="http://...table-batchStart:int=20">5</a>
-    <a href="http://...table-batchStart:int=25">6</a>
-    <a href="http://...table-batchStart:int=30">7</a>
-    [8]
-    <a href="http://...table-batchStart:int=40">9</a>
-    <a href="http://...table-batchStart:int=45">10</a>
-    <a href="http://...table-batchStart:int=50">11</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=20" title="5">5</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=25" title="6">6</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=30" title="7">7</a>
+    </li>
+    <li class="active">
     <span>
-    <a href="http://...table-batchStart:int=55">12</a>
+    8
     </span>
-    </div>
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=40" title="9">9</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=45" title="10">10</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=50" title="11">11</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=40" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 40
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=35">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=45">Next 5 items &raquo;</a>
-    </span>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=35" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
     <span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    ...
+    &hellip;
     </span>
-    <a href="http://...table-batchStart:int=25">6</a>
-    <a href="http://...table-batchStart:int=30">7</a>
-    <a href="http://...table-batchStart:int=35">8</a>
-    [9]
-    <a href="http://...table-batchStart:int=45">10</a>
-    <a href="http://...table-batchStart:int=50">11</a>
-    <a href="http://...table-batchStart:int=55">12</a>
-    </div>
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=25" title="6">6</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=30" title="7">7</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=35" title="8">8</a>
+    </li>
+    <li class="active">
+    <span>
+    9
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=45" title="10">10</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=50" title="11">11</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=45" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 45
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=40">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=50">Next 5 items &raquo;</a>
-    </span>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=40" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
     <span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    ...
+    &hellip;
     </span>
-    <a href="http://...table-batchStart:int=30">7</a>
-    <a href="http://...table-batchStart:int=35">8</a>
-    <a href="http://...table-batchStart:int=40">9</a>
-    [10]
-    <a href="http://...table-batchStart:int=50">11</a>
-    <a href="http://...table-batchStart:int=55">12</a>
-    </div>
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=30" title="7">7</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=35" title="8">8</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=40" title="9">9</a>
+    </li>
+    <li class="active">
+    <span>
+    10
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=50" title="11">11</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=50" title="Next 5 items &raquo;">Next 5 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 50
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=45">&laquo; Previous 5 items</a>
-    </span>
-    <span class="next">
-    <a href="http://...table-batchStart:int=55">Next 4 items &raquo;</a>
-    </span>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=45" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
     <span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    ...
+    &hellip;
     </span>
-    <a href="http://...table-batchStart:int=35">8</a>
-    <a href="http://...table-batchStart:int=40">9</a>
-    <a href="http://...table-batchStart:int=45">10</a>
-    [11]
-    <a href="http://...table-batchStart:int=55">12</a>
-    </div>
-    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=35" title="8">8</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=40" title="9">9</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=45" title="10">10</a>
+    </li>
+    <li class="active">
+    <span>
+    11
+    </span>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="12">12</a>
+    </li>
+    <li class="next">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=55" title="Next 4 items &raquo;">Next 4 items &raquo;</a>
+    </li>
+    </ul>
+    </nav>
+
     >>> table.batchStart = 55
     >>> table.update()
     >>> print table.renderBatch()
-    <div class="listingBar">
-    <span class="previous">
-    <a href="http://...table-batchStart:int=50">&laquo; Previous 5 items</a>
-    </span>
+    <nav class="pagination">
+    <ul>
+    <li class="previous">
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=50" title="&laquo; Previous 5 items">&laquo; Previous 5 items</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=0" title="1">1</a>
+    </li>
+    <li>
     <span>
-    <a href="http://...table-batchStart:int=0">1</a>
-    ...
+    &hellip;
     </span>
-    <a href="http://...table-batchStart:int=40">9</a>
-    <a href="http://...table-batchStart:int=45">10</a>
-    <a href="http://...table-batchStart:int=50">11</a>
-    [12]
-    </div>    
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=40" title="9">9</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=45" title="10">10</a>
+    </li>
+    <li>
+    <a href="http://localhost/batching?filter=title&table-batchSize:int=5&table-batchStart:int=50" title="11">11</a>
+    </li>
+    <li class="active">
+    <span>
+    12
+    </span>
+    </li>
+    </ul>
+    </nav>
+
     >>> print table.render()
     <table>
       <thead>
         <tr>
-          <th>index</th>
+          <th class="sorted-on ascending">index</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>55</td>
+          <td class="sorted-on ascending">55</td>
         </tr>
         <tr>
-          <td>56</td>
+          <td class="sorted-on ascending">56</td>
         </tr>
         <tr>
-          <td>57</td>
+          <td class="sorted-on ascending">57</td>
         </tr>
         <tr>
-          <td>58</td>
+          <td class="sorted-on ascending">58</td>
         </tr>
       </tbody>
     </table>
-    
+
