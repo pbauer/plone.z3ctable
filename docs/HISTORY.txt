@@ -4,7 +4,8 @@ Changelog
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Upgrade HTML structure for Plone 5
+  [datakurre]
 
 
 0.2 (2013-03-26)

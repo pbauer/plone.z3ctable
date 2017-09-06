@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.3dev'
+version = '0.3.dev0'
 
 setup(name='plone.z3ctable',
       version=version,
@@ -24,8 +24,14 @@ setup(name='plone.z3ctable',
       install_requires=[
           'setuptools',
           'z3c.table',
+          'Zope2',
+          'Products.CMFPlone',
+          'zope.i18n',
           # -*- Extra requirements: -*-
       ],
+      extras_require={'test': [
+          'z3c.table [test]',
+      ]},
       entry_points="""
       # -*- Entry points: -*-
       """,

@@ -1,0 +1,20 @@
+language: python
+python: 2.7
+sudo: false
+env:
+  - PLONE_VERSION=5.x
+cache:
+  pip: true
+  directories:
+    - eggs
+matrix:
+  fast_finish: true
+before_install:
+  - pip install zc.buildout
+  - ln -sf buildout-plone-$PLONE_VERSION.cfg buildout.cfg
+install:
+  - buildout -N -t 3 annotate
+  - buildout -N -t 3
+script:
+  - bin/code-analysis
+  - bin/test
