@@ -5,12 +5,12 @@ from z3c.table.testing import setUp
 from z3c.table.testing import tearDown
 
 import doctest
-import six
 import re
+import six
+
 
 optionflags = (
-    doctest.REPORT_ONLY_FIRST_FAILURE |  # doctest.REPORT_UDIFF |
-    doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE
+    doctest.REPORT_ONLY_FIRST_FAILURE | doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE  # noqa: E501
 )
 
 

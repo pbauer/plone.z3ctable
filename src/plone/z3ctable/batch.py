@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from Products.CMFPlone import PloneMessageFactory as _
+from six.moves import range
 from z3c.table import batch
 from zope.i18n import translate
 from ZTUtils import make_query
 from ZTUtils import url_query
-from six.moves import range
 
 
 try:
@@ -162,7 +162,7 @@ class BatchProvider(batch.BatchProvider):
             '<span>',
             str(self.batch.number),
             '</span>',
-            '</li>'
+            '</li>',
         ]
 
     def nextLinks(self):
