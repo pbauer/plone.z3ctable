@@ -4,6 +4,7 @@ from z3c.table import batch
 from zope.i18n import translate
 from ZTUtils import make_query
 from ZTUtils import url_query
+from six.moves import range
 
 
 try:
@@ -41,9 +42,9 @@ class PloneBatch(object):
         #  nextlist is 7 8 in the example above
         self.navlist = self.prevlist = self.nextlist = []
         if self.pagerange and self.numpages >= 1:
-            self.navlist = range(self.pagerangestart, self.pagerangeend)
-            self.prevlist = range(self.pagerangestart, self.pagenumber)
-            self.nextlist = range(self.pagenumber + 1, self.pagerangeend)
+            self.navlist = list(range(self.pagerangestart, self.pagerangeend))
+            self.prevlist = list(range(self.pagerangestart, self.pagenumber))
+            self.nextlist = list(range(self.pagenumber + 1, self.pagerangeend))
 
     @property
     def showfirst(self):
@@ -124,7 +125,7 @@ class BatchProvider(batch.BatchProvider):
         query = {self.table.prefix + '-batchStart': batch.start,
                  self.table.prefix + '-batchSize': batch.size}
         querystring = make_query(query)
-        base = url_query(self.request, omit=query.keys())
+        base = url_query(self.request, omit=list(query.keys()))
         return '{0:s}&{1:s}'.format(base, querystring)
 
     def firstLink(self):
