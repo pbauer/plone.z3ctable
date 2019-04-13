@@ -41,7 +41,7 @@ Now, we can instantiate the table
     >>> table.batchProviderName = 'plonebatch'
     >>> table.batchSize=5
     >>> table.render()
-    u''
+    ''
 
 If we want to see something, the table should have a column.
 It is registered as an adapter.
@@ -66,7 +66,7 @@ Render first items.
     >>> table.startBatchingAt=5
     >>> table.batchStart = 0
     >>> table.update()
-    >>> print table.render()
+    >>> print(table.render())
     <table>
       <thead>
         <tr>
@@ -94,7 +94,7 @@ Render first items.
 
     >>> table.__parent__ = sequence
     >>> table.__name__ = u'batchingTable.html'
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="active">
@@ -127,7 +127,7 @@ Render first items.
 
     >>> table.batchStart = 5
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -166,7 +166,7 @@ Render first items.
 
     >>> table.batchStart = 10
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -208,7 +208,7 @@ Render first items.
 
     >>> table.batchStart = 15
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -253,7 +253,7 @@ Render first items.
 
     >>> table.batchStart = 20
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -301,7 +301,7 @@ Render first items.
 
     >>> table.batchStart = 25
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
         <nav class="pagination">
     <ul>
     <li class="previous">
@@ -354,7 +354,7 @@ Render first items.
 
     >>> table.batchStart = 30
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -407,7 +407,7 @@ Render first items.
 
     >>> table.batchStart = 35
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -455,7 +455,7 @@ Render first items.
 
     >>> table.batchStart = 40
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -500,7 +500,7 @@ Render first items.
 
     >>> table.batchStart = 45
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -542,7 +542,7 @@ Render first items.
 
     >>> table.batchStart = 50
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -581,7 +581,7 @@ Render first items.
 
     >>> table.batchStart = 55
     >>> table.update()
-    >>> print table.renderBatch()
+    >>> print(table.renderBatch())
     <nav class="pagination">
     <ul>
     <li class="previous">
@@ -612,7 +612,7 @@ Render first items.
     </ul>
     </nav>
 
-    >>> print table.render()
+    >>> print(table.render())
     <table>
       <thead>
         <tr>

@@ -122,8 +122,10 @@ class BatchProvider(batch.BatchProvider):
 
     def makeUrl(self, index):
         batch = self.batches[index]
-        query = {self.table.prefix + '-batchStart': batch.start,
-                 self.table.prefix + '-batchSize': batch.size}
+        query = {
+            self.table.prefix + '-batchSize': batch.size,
+            self.table.prefix + '-batchStart': batch.start,
+        }
         querystring = make_query(query)
         base = url_query(self.request, omit=list(query.keys()))
         return '{0:s}&{1:s}'.format(base, querystring)
